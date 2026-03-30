@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ritika Singhal → Lyzr AI</title>
+    <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap)" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #141414;
+            --accent: #00ff88;
+            --accent-dim: #00cc6a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --border: #2a2a2a;
+            --gradient-start: #00ff88;
+            --gradient-end: #00d4ff;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            z-index: 1000;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='[w3.org](http://www.w3.org/2000/svg)'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+            margin-bottom: 32px;
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero h1 {
+            font-size: clamp(48px, 10vw, 80px);
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 24px;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        .arrow-target {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .arrow-target span {
+            color: var(--accent);
+        }
+
+        /* Split Section */
+        .split-section {
+            margin-bottom: 80px;
+        }
+
+        .split-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .split-header h2 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+        }
+
+        .split-header .line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .split-grid {
+            display: grid;
+            grid-template-columns: 7fr 3fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .split-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .split-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .split-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+        }
+
+        .split-card.primary::before {
+            background: var(--accent);
+        }
+
+        .split-card.secondary::before {
+            background: var(--gradient-end);
+        }
+
+        .percentage {
+            font-size: 64px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .split-card h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .split-card ul {
+            list-style: none;
+        }
+
+        .split-card li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .split-card li:last-child {
+            border-bottom: none;
+        }
+
+        .split-card li::before {
+            content: '→';
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        /* Proof Section */
+        .proof-section {
+            margin-bottom: 80px;
+        }
+
+        .proof-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .proof-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .proof-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .proof-card .tag {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 12px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .proof-card h4 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .proof-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Research Section */
+        .research-section {
+            margin-bottom: 80px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 212, 255, 0.05));
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 20px;
+            padding: 48px;
+        }
+
+        .research-section h2 {
+            font-size: 28px;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .research-section h2::before {
+            content: '//';
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .research-item {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+        }
+
+        .research-item .label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .research-item .value {
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        .research-item .value a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Timeline */
+        .timeline-section {
+            margin-bottom: 80px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent), var(--border));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 32px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -37px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            background: var(--bg-dark);
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+        }
+
+        .timeline-item:first-child::before {
+            background: var(--accent);
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 8px;
+        }
+
+        .timeline-item h4 {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        .timeline-company {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .timeline-item p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Skills Grid */
+        .skills-section {
+            margin-bottom: 80px;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill-tag {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 10px 20px;
+            border-radius: 100px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .skill-tag:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .skill-tag.highlight {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .cta-section h2 {
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            font-size: 18px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 32px;
+            border-radius: 100px;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-dim);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        .footer p {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .footer .accent {
+            color: var(--accent);
+        }
+
+        /* Quote Block */
+        .quote-block {
+            background: var(--bg-card);
+            border-left: 3px solid var(--accent);
+            padding: 24px 32px;
+            margin: 40px 0;
+            font-size: 18px;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .quote-block cite {
+            display: block;
+            margin-top: 12px;
+            font-size: 14px;
+            font-style: normal;
+            color: var(--text-muted);
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .split-card {
+                padding: 24px;
+            }
+
+            .percentage {
+                font-size: 48px;
+            }
+
+            .research-section {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="noise"></div>
+    
+    <div class="container">
+        <!-- Hero -->
+        <section class="hero">
+            <div class="status-badge">Application for CEO's Office</div>
+            <h1>Hi Siva, I'm <span class="highlight">Ritika.</span></h1>
+            <p class="hero-subtitle">Cambridge grad. Loop-closer. The kind of person who writes a 3-line Slack message that kills a 30-minute meeting.</p>
+            <div class="arrow-target">
+                <span>→</span> Junior Program Coordinator @ Lyzr AI
+            </div>
+        </section>
+
+        <!-- The 70/30 Split -->
+        <section class="split-section">
+            <div class="split-header">
+                <h2>The Split</h2>
+                <div class="line"></div>
+            </div>
+            
+            <div class="split-grid">
+                <div class="split-card primary">
+                    <div class="percentage">70%</div>
+                    <h3>Operating Rhythm & Loop Closing</h3>
+                    <ul>
+                        <li>Led operating rhythm for 200+ students as JCR President—weekly syncs, budget reviews, cross-committee deliverables. Chased people until things got done.</li>
+                        <li>Built KPI frameworks and RevOps dashboards at DBA. Lived in Zoho CRM and Power BI. Data-driven ops is muscle memory.</li>
+                        <li>Currently running a cargo transformation project across 6 stations at dnata—tracking workstreams, managing stakeholders, closing loops daily.</li>
+                        <li>Negotiated a policy reform that was stalled for 5 years. I don't let things sit.</li>
+                    </ul>
+                </div>
+                
+                <div class="split-card secondary">
+                    <div class="percentage">30%</div>
+                    <h3>CEO Support</h3>
+                    <ul>
+                        <li>Executive prep & briefings at consulting secondments</li>
+                        <li>Calendar management across time zones (DBA operates globally)</li>
+                        <li>Meeting agendas that cut noise</li>
+                        <li>Nothing falls through the cracks</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Me -->
+        <section class="proof-section">
+            <div class="split-header">
+                <h2>Why I'm Built for This</h2>
+                <div class="line"></div>
+            </div>
+            
+            <div class="proof-grid">
+                <div class="proof-card">
+                    <div class="tag">The 3-Line Slack Message</div>
+                    <h4>Comms That Cut</h4>
+                    <p>Wrote market reports for 8,000+ readers at Finance Focused. Authored strategic briefs for C-suite. I write to decide, not to discuss.</p>
+                </div>
+                
+                <div class="proof-card">
+                    <div class="tag">Chasing VPs</div>
+                    <h4>Comfortable With Tension</h4>
+                    <p>As JCR President, I was the intermediary between students and university administration. Pushed back on senior Fellows. Got results without making it weird.</p>
+                </div>
+                
+                <div class="proof-card">
+                    <div class="tag">Series A Learning</div>
+                    <h4>Hungry for the Inside Track</h4>
+                    <p>Chose DBA (0.5% acceptance) specifically to learn how businesses actually run. Not case studies—real ops, real stakes.</p>
+                </div>
+                
+                <div class="proof-card">
+                    <div class="tag">US Timezone</div>
+                    <h4>3-4 Hour Overlap? Done.</h4>
+                    <p>Currently based in Dubai—already work across global timezones. Flexible and ready to make the overlap work from Bangalore.</p>
+                </div>
+                
+                <div class="proof-card">
+                    <div class="tag">Vibe Coding</div>
+                    <h4>Learning the Stack</h4>
+                    <p>Built this page with Claude. Exploring Replit and Architect. The agent training angle of this role? That's the part that actually excites me most.</p>
+                </div>
+                
+                <div class="proof-card">
+                    <div class="tag">Center of Decisions</div>
+                    <h4>I've Been Here Before</h4>
+                    <p>At the intersection of every decision at Peterhouse. Every committee. Every stakeholder. Steep learning curves are where I come alive.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Section -->
+        <section class="research-section">
+            <h2>I Did My Homework</h2>
+            
+            <div class="research-grid">
+                <div class="research-item">
+                    <div class="label">What Lyzr Is Building</div>
+                    <div class="value">Enterprise AI agent infrastructure—safe, responsible, actually deployable. The "hire in 2.5 days" recruiter agent isn't a demo, it's the product.</div>
+                </div>
+                
+                <div class="research-item">
+                    <div class="label">The Agent Vision</div>
+                    <div class="value">Multi-agent systems handling recruiting end-to-end: JDs, candidate research, AI phone screens, follow-ups. The autonomous AI workforce.</div>
+                </div>
+                
+                <div class="research-item">
+                    <div class="label">Your Stack</div>
+                    <div class="value">Lyzr agents + Perplexity (research) + DeepSeek/Groq (reasoning) + AWS for UI. I watched the blueprint walkthrough.</div>
+                </div>
+                
+                <div class="research-item">
+                    <div class="label">Why This Role Exists</div>
+                    <div class="value">You're scaling fast. The grunt work is real. You need someone who can run the operating rhythm AND train the agent that eventually takes it over. I get it.</div>
+                </div>
+                
+                <div class="research-item">
+                    <div class="label">What I Read</div>
+                    <div class="value"><a href="[lyzr.ai](https://www.lyzr.ai/blog/ai-in-recruitment/)" target="_blank">The Recruitment Heist blog</a> + your LinkedIn posts + the State of AI Agents 2025 report</div>
+                </div>
+                
+                <div class="research-item">
+                    <div class="label">The Meta Layer</div>
+                    <div class="value">This role is about making the CEO more efficient—while building the AI that makes the role itself more efficient. That recursion is beautiful.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section class="timeline-section">
+            <div class="split-header">
+                <h2>The Track Record</h2>
+                <div class="line"></div>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2025 — Present</div>
+                    <h4>Programme Fellow</h4>
+                    <div class="timeline-company">Dubai Business Associates</div>
+                    <p>Strategy secondments at Emirates Literature Foundation & dnata Cargo. Financial modelling. Power BI. CRM ops. Real consulting work.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2024 — 2025</div>
+                    <h4>JCR President</h4>
+                    <div class="timeline-company">Peterhouse, Cambridge</div>
+                    <p>Elected to represent 200+ students. Primary liaison between student body and administration. Closed a 5-year policy stalemate.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2024</div>
+                    <h4>Summer Analyst</h4>
+                    <div class="timeline-company">Barnett Waddingham</div>
+                    <p>Built analytical models for institutional clients. £1M+ portfolio analysis. Risk assessments presented to senior management.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2022 — 2025</div>
+                    <h4>BA Human, Social & Political Sciences</h4>
+                    <div class="timeline-company">University of Cambridge</div>
+                    <p>First Class Honours. Top 25% of cohort. Applied Statistics. Evidence-based decision making.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section class="skills-section">
+            <div class="split-header">
+                <h2>The Toolkit</h2>
+                <div class="line"></div>
+            </div>
+            
+            <div class="skills-container">
+                <span class="skill-tag highlight">OKR Tracking</span>
+                <span class="skill-tag highlight">Cross-functional Coordination</span>
+                <span class="skill-tag highlight">Executive Comms</span>
+                <span class="skill-tag">Power BI</span>
+                <span class="skill-tag">CRM</span>
+                <span class="skill-tag">Advanced Excel</span>
+                <span class="skill-tag">Financial Modelling</span>
+                <span class="skill-tag">Stakeholder Management</span>
+                <span class="skill-tag highlight">Loop Closing</span>
+                <span class="skill-tag">Strategic Analysis</span>
+                <span class="skill-tag">Meeting Facilitation</span>
+                <span class="skill-tag highlight">Claude / AI Tools</span>
+                <span class="skill-tag">Presentation Design</span>
+                <span class="skill-tag">Data Visualisation</span>
+            </div>
+        </section>
+
+        <!-- Quote -->
+        <blockquote class="quote-block">
+            "70% of your time - you run the operating rhythm. 30% - you keep me organized."
+            <br><br>
+            I've done both. At Cambridge, I ran the operating rhythm of an entire college while managing relationships with senior administration. The split isn't new to me, it's where I work best.
+            <cite>— My read on why this fits</cite>
+        </blockquote>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <h2>Let's Talk</h2>
+            <p>5 days in office, Bangalore. I'm ready.</p>
+            <div class="cta-buttons">
+                <a href="mailto:ritikasinghal5537@gmail.com" class="btn btn-primary">
+                    <span>→</span> Email Me
+                </a>
+                <a href="[linkedin.com](https://www.linkedin.com/in/ritika-singhal-profile/)" class="btn btn-secondary" target="_blank">
+                    LinkedIn
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Built with <span class="accent">Claude</span> + vibes. Because you asked.</p>
+        </footer>
+    </div>
+</body>
+</html>

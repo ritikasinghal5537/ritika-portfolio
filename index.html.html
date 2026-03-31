@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ritika Singhal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink: #0f0f0f;
+      --paper: #f5f0e8;
+      --accent: #ff3b1f;
+      --muted: #888;
+      --border: #222;
+    }
+
+    html, body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Syne', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* TICKER */
+    .ticker {
+      background: var(--accent);
+      color: white;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 7px 0;
+      white-space: nowrap;
+      overflow: hidden;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker 22s linear infinite;
+    }
+
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* HEADER */
+    header {
+      border-bottom: 1.5px solid var(--border);
+      padding: 18px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .status-pill {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 5px 12px;
+      border-radius: 100px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* HERO */
+    .hero {
+      padding: 60px 40px 50px;
+      border-bottom: 1.5px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 40px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .hero-headline {
+      font-size: clamp(44px, 7vw, 76px);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      margin-top: 24px;
+      font-size: 15px;
+      font-weight: 400;
+      color: #444;
+      max-width: 480px;
+      line-height: 1.6;
+    }
+
+    .hero-meta {
+      text-align: right;
+    }
+
+    .big-number {
+      font-size: 88px;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--accent);
+      letter-spacing: -0.04em;
+    }
+
+    .big-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* STATS GRID */
+    .grid-section {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .grid-cell {
+      padding: 32px 36px;
+      border-right: 1.5px solid var(--border);
+    }
+
+    .grid-cell:last-child { border-right: none; }
+
+    .cell-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .cell-value {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .cell-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+      font-family: 'DM Mono', monospace;
+    }
+
+    /* PROOF SECTION */
+    .proof-section {
+      padding: 50px 40px;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .section-title {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    .section-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid #ccc;
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border: 1.5px solid var(--border);
+    }
+
+    .proof-card {
+      padding: 28px 30px;
+      border-right: 1.5px solid var(--border);
+      border-bottom: 1.5px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    .proof-card:nth-child(even) { border-right: none; }
+    .proof-card:nth-child(3),
+    .proof-card:nth-child(4) { border-bottom: none; }
+
+    .proof-card:hover { background: #ede8e0; }
+
+    .proof-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .proof-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .proof-body {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .proof-tag {
+      display: inline-block;
+      margin-top: 14px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 3px 8px;
+      border-radius: 2px;
+      letter-spacing: 0.06em;
+    }
+
+    /* STACK SECTION */
+    .stack-section {
+      padding: 50px 40px;
+      border-bottom: 1.5px solid var(--border);
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .stack-label {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1;
+    }
+
+    .stack-label span { color: var(--accent); }
+
+    .tools-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tool-chip {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      padding: 8px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 4px;
+      background: white;
+      font-weight: 500;
+      transition: all 0.15s;
+      cursor: default;
+    }
+
+    .tool-chip:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .tool-chip.new {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    /* FOOTER CTA */
+    .footer-cta {
+      padding: 56px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cta-line {
+      font-size: clamp(28px, 4vw, 46px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .cta-line em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .cta-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 14px 24px;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background 0.15s;
+      flex-shrink: 0;
+      margin-left: 40px;
+    }
+
+    .cta-link:hover { background: var(--accent); }
+
+    /* RESPONSIVE */
+    @media (max-width: 700px) {
+      header { padding: 16px 20px; }
+
+      .hero {
+        padding: 40px 20px 36px;
+        grid-template-columns: 1fr;
+      }
+
+      .hero-meta { text-align: left; }
+      .big-number { font-size: 64px; }
+
+      .grid-section { grid-template-columns: 1fr; }
+      .grid-cell { border-right: none; border-bottom: 1.5px solid var(--border); }
+      .grid-cell:last-child { border-bottom: none; }
+
+      .proof-section { padding: 36px 20px; }
+      .proof-grid { grid-template-columns: 1fr; }
+      .proof-card { border-right: none !important; }
+      .proof-card:last-child { border-bottom: none; }
+
+      .stack-section {
+        padding: 36px 20px;
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .footer-cta {
+        padding: 40px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 28px;
+      }
+
+      .cta-link { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <span class="ticker-inner">
+      &nbsp;&nbsp;&nbsp;CAMBRIDGE BA (HONS) — CLASS I &nbsp;★&nbsp; DNATA CARGO TRANSFORMATION &nbsp;★&nbsp; EMIRATES LIT FOUNDATION — 150+ AUTHORS &nbsp;★&nbsp; BARNETT WADDINGHAM — £1M+ PORTFOLIO &nbsp;★&nbsp; 0.5% ACCEPTANCE &nbsp;★&nbsp; AI / AGENTS / AUTOMATION &nbsp;★&nbsp; FINTECH OBSESSED &nbsp;★&nbsp;&nbsp;&nbsp;&nbsp;CAMBRIDGE BA (HONS) — CLASS I &nbsp;★&nbsp; DNATA CARGO TRANSFORMATION &nbsp;★&nbsp; EMIRATES LIT FOUNDATION — 150+ AUTHORS &nbsp;★&nbsp; BARNETT WADDINGHAM — £1M+ PORTFOLIO &nbsp;★&nbsp; 0.5% ACCEPTANCE &nbsp;★&nbsp; AI / AGENTS / AUTOMATION &nbsp;★&nbsp; FINTECH OBSESSED &nbsp;★&nbsp;
+    </span>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">Ritika Singhal</div>
+    <div class="status-pill">
+      <span class="dot"></span>
+      Available
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <div class="hero-eyebrow">Strategy · Data · Execution</div>
+      <h1 class="hero-headline">Built this.<br><em>Vibe coded.</em><br>No dev.</h1>
+      <p class="hero-sub">I asked the question, prompted the agent, iterated until it looked like this. That's the whole point — I'm not waiting for a technical co-founder to build things I want to exist.</p>
+    </div>
+    <div class="hero-meta">
+      <div class="big-number">0.5%</div>
+      <div class="big-label">Acceptance rate,<br>current fellowship</div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="grid-section">
+    <div class="grid-cell">
+      <div class="cell-label">Currently</div>
+      <div class="cell-value">dnata Cargo</div>
+      <div class="cell-sub">Transformation lead — 6 stations</div>
+    </div>
+    <div class="grid-cell">
+      <div class="cell-label">Education</div>
+      <div class="cell-value">Cambridge</div>
+      <div class="cell-sub">HSPS — Class I</div>
+    </div>
+    <div class="grid-cell">
+      <div class="cell-label">Obsessing over</div>
+      <div class="cell-value">AI Agents</div>
+      <div class="cell-sub">Zapier, Claude, NotebookLM, Genspark</div>
+    </div>
+  </div>
+
+  <!-- PROOF -->
+  <section class="proof-section">
+    <div class="section-header">
+      <div class="section-title">What I actually do</div>
+      <div class="section-tag">Receipts</div>
+    </div>
+    <div class="proof-grid">
+      <div class="proof-card">
+        <div class="proof-num">01</div>
+        <div class="proof-title">0 → 1 execution</div>
+        <div class="proof-body">Took the Emirates Literature Foundation's flagship cultural programme from blank page to full delivery — 150+ international authors, sponsorship strategy, partner coordination, operations.</div>
+        <span class="proof-tag">Strategy + Ops</span>
+      </div>
+      <div class="proof-card">
+        <div class="proof-num">02</div>
+        <div class="proof-title">Hard data, real stakes</div>
+        <div class="proof-body">Built actuarial Excel models at Barnett Waddingham, analysed a £1M+ portfolio, ran 15+ CETV analyses. Comfortable in the spreadsheet and in the boardroom.</div>
+        <span class="proof-tag">Financial Modelling</span>
+      </div>
+      <div class="proof-card">
+        <div class="proof-num">03</div>
+        <div class="proof-title">Breaking 5-year deadlocks</div>
+        <div class="proof-body">As JCR President at Cambridge, pushed through a policy reform that had been stuck for 5 years. I don't take "that's not how it's done" as a final answer.</div>
+        <span class="proof-tag">Negotiation</span>
+      </div>
+      <div class="proof-card">
+        <div class="proof-num">04</div>
+        <div class="proof-title">Predictive frameworks</div>
+        <div class="proof-body">Designing a dynamic cargo categorisation model at dnata — transitioning from static to data-driven tier logic across 6 major Dubai stations, with financial feasibility to back each call.</div>
+        <span class="proof-tag">Data + Strategy</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section class="stack-section">
+    <div>
+      <div class="stack-label">Current<br><span>stack</span></div>
+    </div>
+    <div class="tools-list">
+      <div class="tool-chip new">Claude</div>
+      <div class="tool-chip new">Genspark</div>
+      <div class="tool-chip new">NotebookLM</div>
+      <div class="tool-chip new">Zapier</div>
+      <div class="tool-chip">Power BI</div>
+      <div class="tool-chip">Excel (advanced)</div>
+      <div class="tool-chip">Zoho CRM</div>
+      <div class="tool-chip">DeepLearning.AI</div>
+      <div class="tool-chip">Financial Modelling</div>
+      <div class="tool-chip">Pitch Decks</div>
+    </div>
+  </section>
+
+  <!-- FOOTER CTA -->
+  <section class="footer-cta">
+    <div class="cta-line">The page is the<br><em>proof of concept.</em></div>
+    <a href="mailto:ritikasinghal5537@gmail.com" class="cta-link">
+      Get in touch &rarr;
+    </a>
+  </section>
+
+</body>
+</html>
